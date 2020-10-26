@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>Meeting</title>
+
+    <meta name="viewport" content="width=device-width" />
+    <style>
+      body {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 0 10px;
+        font-family: sans-serif;
+        font-size: 16px;
+      }
+    </style>
+    <script>
+      function interactive(el) {
+        const template = el
+          .querySelector("[data-interactive-template]")
+          .innerText.trim()
+        const container = el.querySelector("[data-interactive-container]")
+
+        el.addEventListener("click", (event) => {
+          const action = event.target.getAttribute("data-interactive-action")
+
+          if (action === "new") {
+            container.innerHTML += template.replace(/%{([^}]*)}/g, (_, text) =>
+              window.prompt(text).trim()
+            )
+          } else if (action === "delete") {
+            container.removeChild(event.target.parentNode)
+          } else {
+            console.log("Unknown action:", action)
+          }
+        })
+      }
+
+      function editableTitle(el) {
+        const container = el.querySelector("[data-editable-title-container]")
+
+        el.addEventListener("click", (event) => {
+          if (event.target.tagName === "BUTTON") {
+            container.innerText = document.title = window
+              .prompt("Title:", container.innerText.trim())
+              .trim()
+          }
+        })
+      }
+
+      window.onload = () => {
+        document
+          .querySelectorAll("[data-editable-title]")
+          .forEach(editableTitle)
+        document.querySelectorAll("[data-interactive]").forEach(interactive)
+      }
+    </script>
+  </head>
+  <body>
+    <h1 data-editable-title="">
+      <span data-editable-title-container="">Meeting</span>
+      <button>Edit</button>
+    </h1>
+
+    <h2>Location</h2>
+    <p>Stockholm</p>
+
+    <h2>Present</h2>
+    <div data-interactive="">
+      <script type="text" data-interactive-template="">
+        <li>
+          <strong>%{Namn}</strong> - %{Role}
+          <button data-interactive-action="delete">Remove</button>
+        </li>
+      </script>
+      <ul data-interactive-container="">
+        <button data-interactive-action="new">New</button>
+        <li>
+          <strong>Martin</strong> - Some role
+          <button data-interactive-action="delete">Remove</button>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
