@@ -1,2 +1,2 @@
-# editable-html-documents
+# HTML App
 Simple distributed programs in the browser
