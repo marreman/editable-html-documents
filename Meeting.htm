@@ -66,16 +66,16 @@
     <h2>Location</h2>
     <p>Stockholm</p>
 
-    <h2>Present</h2>
     <div data-interactive="">
+      <h2>Participants <button data-interactive-action="new">Add</button></h2>
+
       <script type="text" data-interactive-template="">
         <li>
-          <strong>%{Namn}</strong> - %{Role}
+          <strong>%{Name}</strong> - %{Role}
           <button data-interactive-action="delete">Remove</button>
         </li>
       </script>
       <ul data-interactive-container="">
-        <button data-interactive-action="new">New</button>
         <li>
           <strong>Martin</strong> - Some role
           <button data-interactive-action="delete">Remove</button>
